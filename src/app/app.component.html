@@ -1,0 +1,116 @@
+<div class="card-container">
+  <h2>Validador de Cartão de Crédito</h2>
+  <form (ngSubmit)="openModal()">
+    <label for="cardNumber">Número do Cartão:</label>
+    <input
+      id="cardNumber"
+      type="text"
+      maxlength="19"
+      [(ngModel)]="cardNumber"
+      name="cardNumber"
+      placeholder="Digite o número do cartão"
+      autocomplete="off"
+    />
+    <button type="submit" style="width:100%;margin-top:8px;background:#1976d2;color:#fff;padding:10px;border:none;border-radius:6px;font-size:1rem;cursor:pointer;">
+      Verificar Marca
+    </button>
+  </form>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" *ngIf="showBrand">
+  <div class="modal">
+    <span class="close" (click)="showBrand = false">&times;</span>
+    <div *ngIf="getCardBrand(cardNumber); else noBrand">
+      <span>Marca do Cartão: <strong>{{ getCardBrand(cardNumber) }}</strong></span>
+    </div>
+    <ng-template #noBrand>
+      <span>Marca do Cartão não identificada.</span>
+    </ng-template>
+  </div>
+</div>
+
+<style>
+.card-container {
+  max-width: 400px;
+  margin: 40px auto 20px auto;
+  padding: 24px 20px;
+  background: #e3f0fc;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 60, 120, 0.08);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+h2 {
+  color: #1565c0;
+  text-align: center;
+  margin-bottom: 18px;
+}
+label {
+  color: #1976d2;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+input[type="text"]:focus {
+  border-color: #1976d2;
+}
+.brand-result {
+  background: #bbdefb;
+  color: #0d47a1;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1.05rem;
+  margin-top: 6px;
+}
+@media (max-width: 500px) {
+  .card-container {
+    padding: 16px 6px;
+    max-width: 98vw;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Modal styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  padding: 28px 24px 20px 24px;
+  border-radius: 10px;
+  min-width: 260px;
+  max-width: 90vw;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  text-align: center;
+  position: relative;
+}
+.close {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  font-size: 1.5rem;
+  color: #1976d2;
+  cursor: pointer;
+  font-weight: bold;
+}
+</style>
+<router-outlet></router-outlet>
